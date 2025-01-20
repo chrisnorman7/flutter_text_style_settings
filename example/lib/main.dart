@@ -105,8 +105,10 @@ class _HomeScreenState extends State<HomeScreen> {
           tooltip: 'Reset to defaults',
         ),
       ],
-      key: ValueKey(settings.toJson().toString()),
+      key: ValueKey('${settings.toJson()} $exampleTextPlacement'),
       exampleTextPlacement: exampleTextPlacement,
+      backgroundColorLabel: 'Background colour',
+      colorLabel: 'Foreground colour',
     );
   }
 }
