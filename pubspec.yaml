@@ -1,0 +1,20 @@
+name: flutter_text_style_settings
+description: "A package for working with text styles, providing various widgets for configuring text styles as well as a serializable `TextStyleSettings` class`."
+version: 0.0.1
+repository: https://github.com/chrisnorman7/flutter_text_style_settings
+
+environment:
+  sdk: ^3.6.1
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  json_annotation: ^4.9.0
+
+dev_dependencies:
+  build_runner: ^2.4.14
+  flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
+  json_serializable: ^6.9.3
