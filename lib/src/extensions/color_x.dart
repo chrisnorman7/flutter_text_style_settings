@@ -6,5 +6,5 @@ import '../json/serializable_color.dart';
 extension ColorX on Color {
   /// Return a serializable color.
   SerializableColor get serializableColor =>
-      SerializableColor(a: a.toInt(), r: r.toInt(), g: g.toInt(), b: b.toInt());
+      SerializableColor(a: a, r: r, g: g, b: b);
 }

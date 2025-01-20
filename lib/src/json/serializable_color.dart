@@ -19,20 +19,20 @@ class SerializableColor {
       _$SerializableColorFromJson(json);
 
   /// The a value.
-  final int a;
+  final double a;
 
   /// The r value.
-  final int r;
+  final double r;
 
   /// The g value.
-  final int g;
+  final double g;
 
   /// The b value.
-  final int b;
+  final double b;
 
   /// Return the color associated with this instance.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  Color get color => Color.fromARGB(a, r, g, b);
+  Color get color => Color.from(alpha: a, red: r, green: g, blue: b);
 
   /// Convert an instance to JSON.
   Map<String, dynamic> toJson() => _$SerializableColorToJson(this);

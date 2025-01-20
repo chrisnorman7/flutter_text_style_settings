@@ -48,14 +48,14 @@ class ColorRow extends StatelessWidget {
         ColorSlider(
           value: a,
           onChanged: (final value) => onChanged(
-            SerializableColor(a: value.round(), r: r, g: g, b: b),
+            SerializableColor(a: value, r: r, g: g, b: b),
           ),
           label: alphaLabel,
         ),
         ColorSlider(
           value: r,
           onChanged: (final value) => onChanged(
-            SerializableColor(a: a, r: value.round(), g: g, b: b),
+            SerializableColor(a: a, r: value, g: g, b: b),
           ),
           autofocus: true,
           label: redLabel,
@@ -63,14 +63,14 @@ class ColorRow extends StatelessWidget {
         ColorSlider(
           value: g,
           onChanged: (final value) => onChanged(
-            SerializableColor(a: a, r: r, g: value.round(), b: b),
+            SerializableColor(a: a, r: r, g: value, b: b),
           ),
           label: greenLabel,
         ),
         ColorSlider(
           value: b,
           onChanged: (final value) => onChanged(
-            SerializableColor(a: a, r: r, g: g, b: value.round()),
+            SerializableColor(a: a, r: r, g: g, b: value),
           ),
           label: blueLabel,
         ),

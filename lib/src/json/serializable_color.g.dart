@@ -8,10 +8,10 @@ part of 'serializable_color.dart';
 
 SerializableColor _$SerializableColorFromJson(Map<String, dynamic> json) =>
     SerializableColor(
-      a: (json['a'] as num).toInt(),
-      r: (json['r'] as num).toInt(),
-      g: (json['g'] as num).toInt(),
-      b: (json['b'] as num).toInt(),
+      a: (json['a'] as num).toDouble(),
+      r: (json['r'] as num).toDouble(),
+      g: (json['g'] as num).toDouble(),
+      b: (json['b'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$SerializableColorToJson(SerializableColor instance) =>

@@ -12,7 +12,7 @@ class ColorSlider extends StatelessWidget {
   });
 
   /// The value to show.
-  final int value;
+  final double value;
 
   /// The function to call when [value] changes.
   final ValueChanged<double> onChanged;
@@ -26,12 +26,12 @@ class ColorSlider extends StatelessWidget {
   /// Build the widget.
   @override
   Widget build(final BuildContext context) => Slider(
-        value: value.toDouble(),
+        value: value,
         onChanged: onChanged,
         autofocus: autofocus,
-        divisions: 255,
-        max: 255.0,
+        divisions: 100,
         label: label,
-        semanticFormatterCallback: (final value) => '$label ${value.floor()}',
+        semanticFormatterCallback: (final value) =>
+            '$label ${(value * 100).floor()}%',
       );
 }
