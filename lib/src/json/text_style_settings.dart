@@ -1,6 +1,4 @@
-import 'dart:ui';
-
-import 'package:flutter/material.dart' hide Color;
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../extensions/color_x.dart';
@@ -30,10 +28,9 @@ class TextStyleSettings {
     final style = DefaultTextStyle.of(context).style;
     return TextStyleSettings(
       fontSize: style.fontSize ?? defaultFontSize,
-      colorValue:
-          style.color?.serializableColor ?? defaultColor.serializableColor,
-      backgroundColorValue: style.backgroundColor?.serializableColor ??
-          defaultBackgroundColor.serializableColor,
+      colorValue: (style.color ?? defaultColor).serializableColor,
+      backgroundColorValue:
+          (style.backgroundColor ?? defaultBackgroundColor).serializableColor,
       fontWeightValue: style.fontWeight?.value ?? FontWeight.normal.value,
       fontStyle: style.fontStyle ?? FontStyle.normal,
     );
@@ -51,20 +48,14 @@ class TextStyleSettings {
 
   /// The foreground color.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  Color get color =>
-      Color.fromARGB(colorValue.a, colorValue.r, colorValue.g, colorValue.b);
+  Color get color => colorValue.color;
 
   /// The value of the [backgroundColor].
   final SerializableColor backgroundColorValue;
 
   /// The background color.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  Color get backgroundColor => Color.fromARGB(
-        backgroundColorValue.a,
-        backgroundColorValue.r,
-        backgroundColorValue.g,
-        backgroundColorValue.b,
-      );
+  Color get backgroundColor => backgroundColorValue.color;
 
   /// The value of the [fontWeight].
   final int fontWeightValue;
@@ -87,4 +78,29 @@ class TextStyleSettings {
 
   /// Convert an instance to JSON.
   Map<String, dynamic> toJson() => _$TextStyleSettingsToJson(this);
+
+  /// Get a text style which matches this instance.
+  TextStyle get textStyle => TextStyle(
+        backgroundColor: backgroundColor,
+        color: color,
+        fontSize: fontSize,
+        fontStyle: fontStyle,
+        fontWeight: fontWeight,
+      );
+
+  /// Copy this instance.
+  TextStyleSettings copyWith({
+    final double? fontSize,
+    final SerializableColor? colorValue,
+    final SerializableColor? backgroundColorValue,
+    final int? fontWeightValue,
+    final FontStyle? fontStyle,
+  }) =>
+      TextStyleSettings(
+        fontSize: fontSize ?? this.fontSize,
+        colorValue: colorValue ?? this.colorValue,
+        backgroundColorValue: backgroundColorValue ?? this.backgroundColorValue,
+        fontWeightValue: fontWeightValue ?? this.fontWeightValue,
+        fontStyle: fontStyle ?? this.fontStyle,
+      );
 }

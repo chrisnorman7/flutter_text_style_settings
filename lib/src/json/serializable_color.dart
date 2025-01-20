@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'serializable_color.g.dart';
@@ -31,6 +30,14 @@ class SerializableColor {
   /// The b value.
   final int b;
 
+  /// Return the color associated with this instance.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  Color get color => Color.fromARGB(a, r, g, b);
+
   /// Convert an instance to JSON.
   Map<String, dynamic> toJson() => _$SerializableColorToJson(this);
+
+  /// Returns `true` if `this` instance has the same values as [other].
+  bool isSameAs(final SerializableColor other) =>
+      a == other.a && r == other.r && g == other.g && b == other.b;
 }
