@@ -10,3 +10,5 @@ export 'src/font_weight_preset.dart';
 export 'src/json/serializable_color.dart';
 export 'src/json/text_style_settings.dart';
 export 'src/screens/text_style_settings_screen.dart';
+export 'src/widgets/color_row.dart';
+export 'src/widgets/color_slider.dart';

@@ -75,6 +75,10 @@ class TextStyleSettingsScreen extends StatefulWidget {
     ],
     this.fontWeightLabel = 'Font weight',
     this.fontStyleLabel = 'Font style',
+    this.alphaLabel = 'Alpha',
+    this.redLabel = 'Red',
+    this.greenLabel = 'Green',
+    this.blueLabel = 'Blue',
     this.colorPresets = const [
       ColorPreset(color: Colors.black, name: 'Black'),
       ColorPreset(color: Colors.white, name: 'White'),
@@ -87,7 +91,7 @@ class TextStyleSettingsScreen extends StatefulWidget {
       ColorPreset(color: Colors.orange, name: 'Orange'),
     ],
     this.backgroundColorLabel = 'Background color',
-    this.colorLabel = 'Color',
+    this.colorLabel = 'Foreground color',
     this.actions = const [],
     this.saveButtonBuilder = defaultSaveButtonBuilder,
     this.exampleText = 'This is how your text will look.',
@@ -124,6 +128,18 @@ class TextStyleSettingsScreen extends StatefulWidget {
 
   /// The label for the font style [Column].
   final String fontStyleLabel;
+
+  /// The alpha label.
+  final String alphaLabel;
+
+  /// The red label.
+  final String redLabel;
+
+  /// The green label.
+  final String greenLabel;
+
+  /// The blue label.
+  final String blueLabel;
 
   /// The color presets to use.
   final List<ColorPreset> colorPresets;
@@ -227,7 +243,7 @@ class TextStyleSettingsScreenState extends State<TextStyleSettingsScreen> {
                   min: widget.minFontSize,
                   max: widget.maxFontSize,
                   semanticFormatterCallback: (final value) =>
-                      value.floor().toString(),
+                      '${widget.fontSizeLabel} ${value.floor()}',
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -333,6 +349,18 @@ class TextStyleSettingsScreenState extends State<TextStyleSettingsScreen> {
                 ),
               ],
             ),
+            ColorRow(
+              value: textStyleSettings.backgroundColorValue,
+              onChanged: (final value) => setState(
+                () => textStyleSettings = textStyleSettings.copyWith(
+                  backgroundColorValue: value,
+                ),
+              ),
+              alphaLabel: widget.alphaLabel,
+              redLabel: widget.redLabel,
+              greenLabel: widget.greenLabel,
+              blueLabel: widget.blueLabel,
+            ),
             Row(
               children: [
                 Text(widget.colorLabel),
@@ -365,6 +393,18 @@ class TextStyleSettingsScreenState extends State<TextStyleSettingsScreen> {
                   ),
                 ),
               ],
+            ),
+            ColorRow(
+              value: textStyleSettings.colorValue,
+              onChanged: (final value) => setState(
+                () => textStyleSettings = textStyleSettings.copyWith(
+                  colorValue: value,
+                ),
+              ),
+              alphaLabel: widget.alphaLabel,
+              redLabel: widget.redLabel,
+              greenLabel: widget.greenLabel,
+              blueLabel: widget.blueLabel,
             ),
             if (bottomPlacements.contains(widget.exampleTextPlacement))
               _ExampleText(
