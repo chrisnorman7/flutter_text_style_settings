@@ -73,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onChanged: (final value) {
         final string = _encoder.convert(value);
         Clipboard.setData(ClipboardData(text: string));
+        setState(() => _textStyleSettings = value);
       },
       actions: [
         MenuAnchor(
@@ -100,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         IconButton(
-          onPressed: () => setState(() {}),
+          onPressed: () => setState(() => _textStyleSettings = null),
           icon: const Icon(Icons.undo),
           tooltip: 'Reset to defaults',
         ),
