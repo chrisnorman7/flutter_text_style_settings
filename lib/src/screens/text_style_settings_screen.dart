@@ -92,6 +92,14 @@ class TextStyleSettingsScreen extends StatefulWidget {
     ],
     this.backgroundColorLabel = 'Background color',
     this.colorLabel = 'Foreground color',
+    this.selectedIcon = const Icon(
+      Icons.check_circle,
+      color: Colors.green,
+    ),
+    this.unselectedIcon = const Icon(
+      Icons.circle_outlined,
+      color: Colors.grey,
+    ),
     this.actions = const [],
     this.saveButtonBuilder = defaultSaveButtonBuilder,
     this.exampleText = 'This is how your text will look.',
@@ -149,6 +157,12 @@ class TextStyleSettingsScreen extends StatefulWidget {
 
   /// The label for the color [Row].
   final String colorLabel;
+
+  /// The icon to show when something is selected.
+  final Widget? selectedIcon;
+
+  /// The icon to show when something is unselected.
+  final Widget? unselectedIcon;
 
   /// The actions to place in the [AppBar].
   final List<Widget> actions;
@@ -253,17 +267,25 @@ class TextStyleSettingsScreenState extends State<TextStyleSettingsScreen> {
                       menuChildren: widget.fontWeightPresets.map(
                         (final fontWeightPreset) {
                           final fontWeight = fontWeightPreset.fontWeight;
-                          return MenuItemButton(
-                            autofocus:
-                                fontWeight == textStyleSettings.fontWeight,
-                            child: Text(
-                              fontWeightPreset.name,
-                              style: TextStyle(fontWeight: fontWeight),
-                            ),
-                            onPressed: () => setState(
-                              () => textStyleSettings =
-                                  textStyleSettings.copyWith(
-                                fontWeightValue: fontWeight.value,
+                          final autofocus =
+                              fontWeight == textStyleSettings.fontWeight;
+                          return Semantics(
+                            selected: true,
+                            checked: autofocus,
+                            child: MenuItemButton(
+                              autofocus: autofocus,
+                              trailingIcon: autofocus
+                                  ? widget.selectedIcon
+                                  : widget.unselectedIcon,
+                              onPressed: () => setState(
+                                () => textStyleSettings =
+                                    textStyleSettings.copyWith(
+                                  fontWeightValue: fontWeight.value,
+                                ),
+                              ),
+                              child: Text(
+                                fontWeightPreset.name,
+                                style: TextStyle(fontWeight: fontWeight),
                               ),
                             ),
                           );
@@ -286,22 +308,30 @@ class TextStyleSettingsScreenState extends State<TextStyleSettingsScreen> {
                   children: [
                     Text(widget.fontStyleLabel),
                     MenuAnchor(
-                      menuChildren: FontStyle.values
-                          .map(
-                            (final fontStyle) => MenuItemButton(
-                              autofocus:
-                                  fontStyle == textStyleSettings.fontStyle,
+                      menuChildren: FontStyle.values.map(
+                        (final fontStyle) {
+                          final autofocus =
+                              fontStyle == textStyleSettings.fontStyle;
+                          return Semantics(
+                            selected: true,
+                            checked: autofocus,
+                            child: MenuItemButton(
+                              autofocus: autofocus,
                               onPressed: () => setState(
                                 () => textStyleSettings = textStyleSettings
                                     .copyWith(fontStyle: fontStyle),
                               ),
+                              trailingIcon: autofocus
+                                  ? widget.selectedIcon
+                                  : widget.unselectedIcon,
                               child: Text(
                                 fontStyle.name,
                                 style: TextStyle(fontStyle: fontStyle),
                               ),
                             ),
-                          )
-                          .toList(),
+                          );
+                        },
+                      ).toList(),
                       builder: (final context, final controller, final child) =>
                           IconButton(
                         onPressed: () => _toggleController(controller),
@@ -324,16 +354,25 @@ class TextStyleSettingsScreenState extends State<TextStyleSettingsScreen> {
                     (final colorPreset) {
                       final serializableColor =
                           colorPreset.color.serializableColor;
-                      return MenuItemButton(
-                        autofocus: serializableColor.isSameAs(
-                          textStyleSettings.backgroundColorValue,
-                        ),
-                        onPressed: () => setState(
-                          () => textStyleSettings = textStyleSettings.copyWith(
-                            backgroundColorValue: serializableColor,
+                      final autofocus = serializableColor.isSameAs(
+                        textStyleSettings.backgroundColorValue,
+                      );
+                      return Semantics(
+                        selected: true,
+                        checked: autofocus,
+                        child: MenuItemButton(
+                          autofocus: autofocus,
+                          onPressed: () => setState(
+                            () =>
+                                textStyleSettings = textStyleSettings.copyWith(
+                              backgroundColorValue: serializableColor,
+                            ),
                           ),
+                          trailingIcon: autofocus
+                              ? widget.selectedIcon
+                              : widget.unselectedIcon,
+                          child: Text(colorPreset.name),
                         ),
-                        child: Text(colorPreset.name),
                       );
                     },
                   ).toList(),
@@ -369,16 +408,25 @@ class TextStyleSettingsScreenState extends State<TextStyleSettingsScreen> {
                     (final colorPreset) {
                       final serializableColor =
                           colorPreset.color.serializableColor;
-                      return MenuItemButton(
-                        autofocus: serializableColor.isSameAs(
-                          textStyleSettings.colorValue,
-                        ),
-                        onPressed: () => setState(
-                          () => textStyleSettings = textStyleSettings.copyWith(
-                            colorValue: serializableColor,
+                      final autofocus = serializableColor.isSameAs(
+                        textStyleSettings.colorValue,
+                      );
+                      return Semantics(
+                        selected: true,
+                        checked: autofocus,
+                        child: MenuItemButton(
+                          autofocus: autofocus,
+                          onPressed: () => setState(
+                            () =>
+                                textStyleSettings = textStyleSettings.copyWith(
+                              colorValue: serializableColor,
+                            ),
                           ),
+                          trailingIcon: autofocus
+                              ? widget.selectedIcon
+                              : widget.unselectedIcon,
+                          child: Text(colorPreset.name),
                         ),
-                        child: Text(colorPreset.name),
                       );
                     },
                   ).toList(),
