@@ -68,48 +68,54 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       settings = textStyleSettings;
     }
-    return TextStyleSettingsScreen(
-      textStyleSettings: settings,
-      onChanged: (final value) {
-        final string = _encoder.convert(value);
-        Clipboard.setData(ClipboardData(text: string));
-        setState(() => _textStyleSettings = value);
-      },
-      actions: [
-        MenuAnchor(
-          menuChildren: ExampleTextPlacement.values
-              .map(
-                (final placement) => MenuItemButton(
-                  autofocus: placement == exampleTextPlacement,
-                  child: Text(placement.name.titleCase),
-                  onPressed: () => setState(
-                    () => exampleTextPlacement = placement,
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          MenuAnchor(
+            menuChildren: ExampleTextPlacement.values
+                .map(
+                  (final placement) => MenuItemButton(
+                    autofocus: placement == exampleTextPlacement,
+                    child: Text(placement.name.titleCase),
+                    onPressed: () => setState(
+                      () => exampleTextPlacement = placement,
+                    ),
                   ),
-                ),
-              )
-              .toList(),
-          builder: (final context, final controller, final child) => IconButton(
-            onPressed: () {
-              if (controller.isOpen) {
-                controller.close();
-              } else {
-                controller.open();
-              }
-            },
-            icon: const Icon(Icons.more_vert),
-            tooltip: 'Move example text',
+                )
+                .toList(),
+            builder: (final context, final controller, final child) =>
+                IconButton(
+              onPressed: () {
+                if (controller.isOpen) {
+                  controller.close();
+                } else {
+                  controller.open();
+                }
+              },
+              icon: const Icon(Icons.more_vert),
+              tooltip: 'Move example text',
+            ),
           ),
-        ),
-        IconButton(
-          onPressed: () => setState(() => _textStyleSettings = null),
-          icon: const Icon(Icons.undo),
-          tooltip: 'Reset to defaults',
-        ),
-      ],
-      key: ValueKey('${settings.toJson()} $exampleTextPlacement'),
-      exampleTextPlacement: exampleTextPlacement,
-      backgroundColorLabel: 'Background colour',
-      colorLabel: 'Foreground colour',
+          IconButton(
+            onPressed: () => setState(() => _textStyleSettings = null),
+            icon: const Icon(Icons.undo),
+            tooltip: 'Reset to defaults',
+          ),
+        ],
+        title: const Text('Edit Text Style'),
+      ),
+      body: TextStyleSettingsPage(
+        textStyleSettings: settings,
+        onChanged: (final value) {
+          final string = _encoder.convert(value);
+          Clipboard.setData(ClipboardData(text: string));
+          setState(() => _textStyleSettings = value);
+        },
+        key: ValueKey('${settings.toJson()} $exampleTextPlacement'),
+        exampleTextPlacement: exampleTextPlacement,
+        backgroundColorLabel: 'Background colour',
+        colorLabel: 'Foreground colour',
+      ),
     );
   }
 }
